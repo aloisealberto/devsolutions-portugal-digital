@@ -36,6 +36,7 @@ Após o primeiro push:
 
 ### Troubleshooting
 
+- **Erro 403 na Hostgator**: O workflow está configurado para enviar para `public_html/`. Certifique-se que esta pasta existe no seu FTP
 - **Erro de permissões FTP**: Verifique as credenciais nos secrets
 - **Página 404**: Certifique-se que o `.htaccess` foi enviado corretamente
 - **Funcionalidade não funciona**: Verifique se as variáveis de ambiente do Supabase estão corretas
