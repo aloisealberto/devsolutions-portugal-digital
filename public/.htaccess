@@ -1,25 +1,38 @@
-# Set default charset
+# DevSoluctions - Hostgator Optimized .htaccess
 AddDefaultCharset UTF-8
-
-# Enable directory browsing (for debugging)
-Options +Indexes
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
   
-  # Don't rewrite files or directories that exist
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
+  # Serve existing files and directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
   
-  # Rewrite everything else to index.html to allow HTML5 state links
+  # Route all other requests to index.html for SPA
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# Set proper MIME types
+# MIME Types
 <IfModule mod_mime.c>
   AddType text/html .html
   AddType text/css .css
-  AddType application/javascript .js
+  AddType application/javascript .js .mjs
+  AddType application/json .json
+  AddType image/svg+xml .svg
   AddType image/x-icon .ico
+  AddType font/woff2 .woff2
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set X-XSS-Protection "1; mode=block"
 </IfModule>

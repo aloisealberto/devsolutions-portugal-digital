@@ -1,6 +1,40 @@
 # Guia de Deploy
 
-## Configuração do GitHub Actions
+## Deploy Manual (Recomendado para HostGator)
+
+### Passo 1: Compilar o Projeto
+
+**Windows:**
+```bash
+build-manual.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x build-manual.sh
+./build-manual.sh
+```
+
+### Passo 2: Upload via cPanel
+
+1. Aceda ao cPanel da HostGator
+2. Abra o **File Manager**
+3. Navegue até `public_html/`
+4. Faça upload de **TODOS** os ficheiros da pasta `dist/`
+5. Certifique-se que o `.htaccess` foi enviado
+6. Configure permissões:
+   - Ficheiros: **644**
+   - Pastas: **755**
+
+### Passo 3: Testar o Deploy
+
+Acesse: `https://seudominio.com/test.html`
+
+Se vir a página de sucesso, o deploy funcionou! ✅
+
+---
+
+## Configuração do GitHub Actions (Automático)
 
 Este projeto está configurado para deploy automático via FTP sempre que houver push na branch `main`.
 
