@@ -36,7 +36,32 @@ Após o primeiro push:
 
 ### Troubleshooting
 
-- **Erro 403 na Hostgator**: O workflow está configurado para enviar para `public_html/`. Certifique-se que esta pasta existe no seu FTP
+#### Erro 403 - Acesso Negado na Hostgator
+
+Se receber erro 403, siga estes passos:
+
+1. **Verificar estrutura de pastas**:
+   - O workflow envia para `/public_html/`
+   - Certifique-se que esta pasta existe no seu FTP
+   - Alguns planos Hostgator usam apenas `/` ou `/httpdocs/`
+
+2. **Testar acesso básico**:
+   - Após o deploy, acesse `https://seudominio.com/test.html`
+   - Se este ficheiro aparecer, o FTP está a funcionar
+
+3. **Verificar ficheiros enviados**:
+   - Acesse o FTP e verifique se os ficheiros estão em `public_html/`
+   - Confirme que o ficheiro `.htaccess` foi enviado
+   - Verifique que existe um ficheiro `index.html` na raiz
+
+4. **Permissões de ficheiros**:
+   - Ficheiros: 644 (rw-r--r--)
+   - Pastas: 755 (rwxr-xr-x)
+
+5. **Limpar cache**:
+   - Limpe o cache do browser
+   - Tente aceder em modo privado/incógnito
+
 - **Erro de permissões FTP**: Verifique as credenciais nos secrets
 - **Página 404**: Certifique-se que o `.htaccess` foi enviado corretamente
 - **Funcionalidade não funciona**: Verifique se as variáveis de ambiente do Supabase estão corretas

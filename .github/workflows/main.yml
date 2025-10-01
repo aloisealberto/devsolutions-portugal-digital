@@ -27,6 +27,17 @@ jobs:
         VITE_SUPABASE_PROJECT_ID: ${{ secrets.VITE_SUPABASE_PROJECT_ID }}
       run: npm run build
     
+    - name: 🔍 Debug - List built files
+      run: |
+        echo "Contents of dist folder:"
+        ls -la dist/
+        echo "Index.html content:"
+        cat dist/index.html
+    
+    - name: 📝 Create test file
+      run: |
+        echo "<!DOCTYPE html><html><head><title>Test</title></head><body><h1>Site Working!</h1><p>If you see this, FTP is working correctly.</p></body></html>" > dist/test.html
+    
     - name: 📂 Deploy to hosting
       uses: SamKirkland/FTP-Deploy-Action@v4.3.6
       with:
@@ -34,4 +45,5 @@ jobs:
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
-        server-dir: ./public_html/
+        server-dir: /public_html/
+        dangerous-clean-slate: false

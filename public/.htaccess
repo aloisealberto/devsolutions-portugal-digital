@@ -1,8 +1,25 @@
+# Set default charset
+AddDefaultCharset UTF-8
+
+# Enable directory browsing (for debugging)
+Options +Indexes
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
+  
+  # Don't rewrite files or directories that exist
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  
+  # Rewrite everything else to index.html to allow HTML5 state links
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+  AddType text/html .html
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType image/x-icon .ico
 </IfModule>
