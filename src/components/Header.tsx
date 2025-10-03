@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,10 +24,11 @@ const Header = () => {
   };
 
   const navItems = [
-    { label: "Início", id: "inicio" },
+    { label: "Início", id: "inicio", href: "/" },
     { label: "Serviços", id: "servicos" },
     { label: "Sobre", id: "sobre" },
     { label: "Orçamento", id: "orcamento" },
+    { label: "Blog", id: "blog", href: "/blog" },
   ];
 
   return (
@@ -47,20 +51,32 @@ const Header = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
-              >
-                {item.label}
-              </button>
+              item.href ? (
+                <Link
+                  key={item.id}
+                  to={item.href}
+                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-foreground hover:text-primary transition-colors duration-300 font-medium"
+                >
+                  {item.label}
+                </button>
+              )
             ))}
-            <Button
-              onClick={() => scrollToSection("orcamento")}
-              className="bg-gradient-primary hover:opacity-90 transition-opacity"
-            >
-              Contactar
-            </Button>
+            {isHomePage && (
+              <Button
+                onClick={() => scrollToSection("orcamento")}
+                className="bg-gradient-primary hover:opacity-90 transition-opacity"
+              >
+                Contactar
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -76,20 +92,33 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 space-y-4 animate-fade-in">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left text-foreground hover:text-primary transition-colors duration-300 font-medium py-2"
-              >
-                {item.label}
-              </button>
+              item.href ? (
+                <Link
+                  key={item.id}
+                  to={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block w-full text-left text-foreground hover:text-primary transition-colors duration-300 font-medium py-2"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="block w-full text-left text-foreground hover:text-primary transition-colors duration-300 font-medium py-2"
+                >
+                  {item.label}
+                </button>
+              )
             ))}
-            <Button
-              onClick={() => scrollToSection("orcamento")}
-              className="w-full bg-gradient-primary hover:opacity-90 transition-opacity"
-            >
-              Contactar
-            </Button>
+            {isHomePage && (
+              <Button
+                onClick={() => scrollToSection("orcamento")}
+                className="w-full bg-gradient-primary hover:opacity-90 transition-opacity"
+              >
+                Contactar
+              </Button>
+            )}
           </div>
         )}
       </nav>
